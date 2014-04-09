@@ -163,6 +163,10 @@ public class MainActivity extends ActionBarActivity
             userId = "22345";
             return userId;
         }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
+        }
     }
 
     public static class TestMain extends AbsMain {
