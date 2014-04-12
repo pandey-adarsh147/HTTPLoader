@@ -3,6 +3,7 @@ package com.brahmand.restloader.lib;
 import android.content.Context;
 import android.util.Log;
 import com.brahmand.restloader.lib.builder.RequestEntity;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -38,10 +39,12 @@ public class RESTAsyncLoader<D, R> extends HTTPAsyncLoader<ResponseEntity<D>, Th
     @Override
     protected ResponseEntity<D> load() throws Throwable {
 
+        HttpEntity<?> httpEntity = new HttpEntity<Object>(mRequestEntity.getData(), mRequestEntity.getHttpHeaders());
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
-        ResponseEntity<D> dResponseEntity = restTemplate.getForEntity(mRequestEntity.getUrl(), mResponseType, "heloo");
+        ResponseEntity<D> dResponseEntity = restTemplate.exchange(mRequestEntity.getUrl(), mRequestEntity.getHttpMethod(), httpEntity, mResponseType);
+
         return dResponseEntity;
     }
 

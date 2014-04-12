@@ -1,5 +1,8 @@
 package com.brahmand.restloader.lib.builder;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,11 +10,12 @@ import java.util.Map;
  * Created by ADARSH on 08-04-2014.
  */
 public class RequestEntity<T> {
-    private T                   mData;
-    private Header              mHeader;
-    private String              mUrl;
-    private Object[]            mUrlDataArray;
-    private Map<String, Object> mUrlDataMap;
+    private T data;
+    private HttpHeaders httpHeaders;
+    private String url;
+    private Object[] urlDataArray;
+    private Map<String, Object> urlDataMap;
+    private HttpMethod httpMethod;
 
 
     /**
@@ -20,7 +24,7 @@ public class RequestEntity<T> {
      * @return
      */
     public RequestEntity<T> addUrlDataMap(Map<String, Object> dataMap) {
-        mUrlDataMap = dataMap;
+        this.urlDataMap = dataMap;
 
         return this;
     }
@@ -31,29 +35,63 @@ public class RequestEntity<T> {
      * @return
      */
     public RequestEntity addUrlDataArray(Object... objects) {
-        mUrlDataArray = objects;
+        this.urlDataArray = objects;
 
         return this;
     }
 
     public RequestEntity<T> addUrl(String url) {
-        mUrl = url;
+        this.url = url;
 
         return this;
     }
 
     public RequestEntity<T> addEntity(T data) {
-        mData = data;
+        this.data = data;
         return this;
     }
 
-    public RequestEntity<T> addHeader(Header header) {
-        mHeader = header;
+    public RequestEntity<T> addHttpHeaders(HttpHeaders header) {
+        this.httpHeaders = header;
         return this;
+    }
+
+    public RequestEntity<T> addData(T data) {
+        this.data = data;
+
+        return this;
+    }
+
+    public RequestEntity<T> addHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
+
+        return this;
+    }
+
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
+    }
+
+    public T getData() {
+        return data;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
+    }
+
+    public HttpHeaders getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public Object[] getUrlDataArray() {
+        return urlDataArray;
+    }
+
+
+
+    public Map<String, Object> getUrlDataMap() {
+        return urlDataMap;
     }
 
     public static class Header {
